@@ -6,7 +6,7 @@
 /*   By: malbuque <malbuque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:57:02 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/08 21:05:56 by malbuque         ###   ########.fr       */
+/*   Updated: 2022/03/08 21:11:47 by malbuque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 
 	i = 0;
-	str = ft_calloc(ft_strlen (s1) + 1, sizeof(char));
+	str = (char *)malloc(sizeof(char) * (i + 1));
 	if (str == NULL)
 		return (NULL);
 	while (s1[i])
@@ -53,6 +53,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
+/*Recebe duas strings e cria um destino para receber a concatenação de ambas. 
+É feita a alocação de memória para o destino*/
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
