@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbuque <malbuque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maryhelen <maryhelen@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:28:33 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/08 20:34:37 by malbuque         ###   ########.fr       */
+/*   Updated: 2022/03/12 18:00:48 by maryhelen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_next_line(int fd)
 	char		*ret;
 	size_t		len;
 
-	if ((read(fd, NULL, 0) == -1) || (fd < 0 || fd > 1024) /*|| BUFFER_SIZE <= 0*/)
+	if ((read(fd, NULL, 0) == -1) || (fd < 0 || fd > 1024) || BUFFER_SIZE <= 0)
 		return ERROR;
 	len = 1;
 	ret = NULL;
