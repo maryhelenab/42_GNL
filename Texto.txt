@@ -1,0 +1,5 @@
+pao com mortadela
+alo alo
+sem dias   seguiods
+meu deus me ajudar pq nao sei o que estou fazendo
+gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 *.c && ./a.out
