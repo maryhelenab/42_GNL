@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbuque <malbuque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maryhelen <maryhelen@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:57:02 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/08 21:11:47 by malbuque         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:43:43 by maryhelen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,19 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-/*Sua finalidade é copiar uma string fonte para uma string origem, 
-do inicio até onde é determinado. Apagando tudo que está no destino*/
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+/*Dentro de uma string faço a alteração de um caracter parao valor 0, a partir da 
+posição que tb determino até o início da string.(Ou seja de trás para frente)
+assim serve para limpar endereços de memória quando necessário.*/
+void	ft_bzero(void *s, size_t n)
 {
-	if (!dst && !src)
-		return (NULL);
-	while (n--)
-		((unsigned char *) dst)[n] = ((unsigned char *) src)[n];
-	return (dst);
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		((char *)s)[i] = 0;
+		i++;
+	}
 }
 
 /*Recebe duas strings e cria um destino para receber a concatenação de ambas. 
@@ -100,4 +104,33 @@ char	*ft_strchr(const char *s, int c)
 	if (!c && s[i] == '\0')
 		return ((char *)s + i);
 	return (NULL);
+}
+
+//Copia uma string a partir do ponto onde informou até o tamanho determinado.
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	size_t	j;
+	size_t	s_len;
+	char	*new;
+
+	if (!s)
+		return (NULL);
+	s_len = ft_strlen(s);
+	if (s_len < len)
+		new = (char *)malloc(sizeof(char) * (s_len + 1));
+	else
+		new = (char *)malloc(sizeof(char) * (len + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (i >= start && j < len)
+			new[j++] = s[i];
+		i++;
+	}
+	new[j] = '\0';
+	return (new);
 }
