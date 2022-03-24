@@ -6,7 +6,7 @@
 /*   By: maryhelen <maryhelen@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:28:33 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/24 21:14:18 by maryhelen        ###   ########.fr       */
+/*   Updated: 2022/03/24 22:00:03 by maryhelen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	temp(char *buff, char *src)
 		i++;
 	}
 	buff[i] = '\0';
+	printf("\n temp result: %s \n", buff);
 }
 
 int	find_n(char *str)
@@ -54,21 +55,19 @@ char	*get_next_line(int fd)
 	//Read is necessary to check if the file is exists or is valid.
 	if ((read(fd, NULL, 0) == -1) || (fd < 0 || fd > 1024) || BUFFER_SIZE <= 0)
 		return (NULL);
-	readret = strlen(buff);
-	if (!readret)
-	{
-		readret = read(fd, buff, BUFFER_SIZE);
-		buff[readret] = '\0';
-	}
+	readret = read(fd, buff, BUFFER_SIZE);
 	while (readret > 0)
 	{
+		buff[readret] = '\0';
 		i = find_n(buff);
 		if (i >= 0)
 		{
 			str = ft_substr(buff, 0, i + 1);
+			printf("\n str result: %s \n", str);
 			temp(buff, (buff + i + 1));
 			break ;
 		}
+		readret = read(fd, buff, BUFFER_SIZE);
 	}
 	return (buff);
 }
