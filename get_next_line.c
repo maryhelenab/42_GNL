@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maryhelen <maryhelen@student.42.fr>        +#+  +:+       +#+        */
+/*   By: malbuque <malbuque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:28:33 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/24 22:00:03 by maryhelen        ###   ########.fr       */
+/*   Updated: 2022/03/28 19:22:30 by malbuque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,7 @@
 #include <fcntl.h>
 #include <string.h>
 
-void	temp(char *buff, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		buff[i] = src[i];
-		i++;
-	}
-	buff[i] = '\0';
-	printf("\n temp result: %s \n", buff);
-}
-
-int	find_n(char *str)
+int	find_nl(char *str)
 {
 	int	i;
 
@@ -45,31 +31,65 @@ int	find_n(char *str)
 	return (-1);
 }
 
+void	update(char *buff, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		buff[i] = src[i];
+		i++;
+	}
+	buff[i] = '\0';
+}
+
 char	*get_next_line(int fd)
 {
 	static char	buff[BUFFER_SIZE + 1];
 	char		*str;
+	char		*strtemp;
 	int			readret;
-	int			i;
+	int			index_nl;
 
 	//Read is necessary to check if the file is exists or is valid.
 	if ((read(fd, NULL, 0) == -1) || (fd < 0 || fd > 1024) || BUFFER_SIZE <= 0)
 		return (NULL);
-	readret = read(fd, buff, BUFFER_SIZE);
-	while (readret > 0)
+	if (ft_strlen(buff) == 0)
 	{
-		buff[readret] = '\0';
-		i = find_n(buff);
-		if (i >= 0)
-		{
-			str = ft_substr(buff, 0, i + 1);
-			printf("\n str result: %s \n", str);
-			temp(buff, (buff + i + 1));
-			break ;
-		}
 		readret = read(fd, buff, BUFFER_SIZE);
+		buff[readret] = '\0';
 	}
-	return (buff);
+	index_nl = find_nl(buff);
+	if (index_nl >= 0)
+	{
+		str = ft_substr(buff, 0, index_nl + 1);
+		update(buff, (buff + index_nl + 1));
+	}
+	else
+	{
+		strtemp = ft_substr(buff, 0, ft_strlen(buff));
+		update(buff, (buff + ft_strlen(buff)));
+		readret = 1;
+		index_nl = -1;
+		while (ft_strlen(buff) == 0 && readret > 0 && index_nl < 0)
+		{
+			readret = read(fd, buff, BUFFER_SIZE);
+			index_nl = find_nl(buff);
+			if (index_nl < 0 && readret > 0)
+			{
+				str = ft_strjoin (strtemp, ft_substr(buff, 0, ft_strlen(buff)));
+				update(buff, (buff + ft_strlen(buff)));
+			}
+			else if (index_nl >= 0)
+			{
+				str = ft_strjoin (strtemp, ft_substr(buff, 0, index_nl + 1));
+				update(buff, (buff + index_nl + 1));
+			}
+			//printf("%d // %d // %d \n", ft_strlen(buff), readret, index_nl);
+		}
+	}
+	return (str);
 }
 
 int	main(void)
@@ -80,10 +100,22 @@ int	main(void)
 	fd = open ("Texto.txt", O_RDONLY);
 	if (fd < 0)
 		fprintf (stderr, "Erro : %s\n", strerror(errno));
-	get_next_line(fd);
 	char	*str;
+	/*str = get_next_line(fd);
 	str = get_next_line(fd);
-	printf("Printf Main: %s\n", str);
+	str = get_next_line(fd);
+	str = get_next_line(fd);
+	str = get_next_line(fd);
+	str = get_next_line(fd);
+	str = get_next_line(fd);
+	str = get_next_line(fd);*/
+	str = get_next_line(fd);
+	printf("%s", str);
+	while (ft_strlen(str)>0)
+	{
+		str = get_next_line(fd);
+		printf("%s", str);
+	}
 	/*Fechando o arquivo*/
 	close(fd);
 	return (0);
