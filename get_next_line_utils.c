@@ -6,14 +6,14 @@
 /*   By: malbuque <malbuque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:57:02 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/29 21:59:31 by malbuque         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:56:33 by malbuque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/*Verificar o tamanho do elemento.*/
-size_t	ft_strlen(const char *s)
+/*Verificar o tamanho do elemento ate o \n.*/
+size_t	ft_strnl(const char *s)
 {
 	int	i;
 
@@ -24,16 +24,16 @@ size_t	ft_strlen(const char *s)
 }
 
 /*Recebe duas strings e cria um destino para receber a concatenação de ambas. 
-É feita a alocação de memória para o destino*/
-char	*ft_strjoin(char *s1, char *s2)
+É feita a alocação de memória para o destino e libertacao da memoria*/
+char	*ft_strline(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	s1_len;
 	size_t	s2_len;
 	char	*dest;
 
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
+	s1_len = ft_strnl(s1);
+	s2_len = ft_strnl(s2);
 	dest = malloc((s1_len + s2_len + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
@@ -71,15 +71,13 @@ int	find_nl(char *str)
 void	update(char *buff)
 {
 	int		i;
-	int		j;
 	int		h;
 
 	i = 0;
-	j = find_nl(buff);
 	h = 0;
 	while (buff[i] != '\0')
 	{
-		if (i > j)
+		if (i > find_nl(buff))
 			buff[h++] = buff[i];
 		buff[i++] = '\0';
 	}

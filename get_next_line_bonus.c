@@ -6,7 +6,7 @@
 /*   By: malbuque <malbuque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:28:33 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/29 22:08:38 by malbuque         ###   ########.fr       */
+/*   Updated: 2022/03/30 19:07:00 by malbuque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*get_next_line(int fd)
 	int			readret;
 	int			index_nl;
 
-	//Read is necessary to check if the file is exists or is valid.
 	if ((fd < 0 || fd >= FOPEN_MAX) || BUFFER_SIZE <= 0)
 		return (NULL);
 	readret = 1;
@@ -40,4 +39,3 @@ char	*get_next_line(int fd)
 	}
 	return (str);
 }
-

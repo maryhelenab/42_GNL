@@ -6,7 +6,7 @@
 /*   By: malbuque <malbuque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:37:36 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/29 22:01:05 by malbuque         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:57:58 by malbuque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@
 # include <fcntl.h>
 # include <string.h>
 
-# define ERROR (0)
-
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strnl(const char *s);
+char	*ft_strline(char *s1, char *s2);
 void	update(char *buff);
 int		find_nl(char *str);
 #endif
