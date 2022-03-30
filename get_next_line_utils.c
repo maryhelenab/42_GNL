@@ -6,7 +6,7 @@
 /*   By: malbuque <malbuque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:57:02 by malbuque          #+#    #+#             */
-/*   Updated: 2022/03/30 18:56:33 by malbuque         ###   ########.fr       */
+/*   Updated: 2022/03/30 20:26:02 by malbuque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ void	update(char *buff)
 {
 	int		i;
 	int		h;
+	int		j;
 
 	i = 0;
 	h = 0;
+	j = find_nl(buff);
 	while (buff[i] != '\0')
 	{
-		if (i > find_nl(buff))
+		if (i > j)
 			buff[h++] = buff[i];
 		buff[i++] = '\0';
 	}
